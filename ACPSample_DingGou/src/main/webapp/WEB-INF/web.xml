@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>ACPSample_DingGou</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+   <filter>
+    	<filter-name>CharsetEncodingFilter</filter-name>
+    	<filter-class>web.CharsetEncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+    	<filter-name>CharsetEncodingFilter</filter-name>
+    	<url-pattern>*.jsp</url-pattern>
+    	<url-pattern>*</url-pattern>
+    </filter-mapping>
+  
+  <servlet>
+    <servlet-name>autoLoadServlet</servlet-name>
+    <servlet-class>web.AutoLoadServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  
+   <servlet-mapping>
+    <servlet-name>autoLoadServlet</servlet-name>
+    <url-pattern>/autoLoadServlet</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- 前台通知 处理类 此类需要映射一个外网地址并将该地址上送到 请求报文中的frontUrl中-->
+    <servlet>
+    <servlet-name>frontRcvResponse</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.FrontRcvResponse</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>frontRcvResponse</servlet-name>
+    <url-pattern>/frontRcvResponse</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 后台通知 处理类 此类需要映射一个外网地址并将该地址上送到 请求报文中的backUrl中-->
+    <servlet>
+    <servlet-name>backRcvResponse</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.BackRcvResponse</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>backRcvResponse</servlet-name>
+    <url-pattern>/backRcvResponse</url-pattern>
+  </servlet-mapping>
+  
+  
+ <!--前台 实名认证-->
+ <servlet>
+    <servlet-name>form_6_2_RealAuth_Front</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.Form_6_2_RealAuth_Front</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>form_6_2_RealAuth_Front</servlet-name>
+    <url-pattern>/form_6_2_RealAuth_Front</url-pattern>
+  </servlet-mapping>
+  
+ <!--后台 实名认证-->
+ <servlet>
+    <servlet-name>form_6_2_RealAuth_Back</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.Form_6_2_RealAuth_Back</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>form_6_2_RealAuth_Back</servlet-name>
+    <url-pattern>/form_6_2_RealAuth_Back</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+ <!--消费-->
+ <servlet>
+    <servlet-name>form_6_3_Consume</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.Form_6_3_Consume</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>form_6_3_Consume</servlet-name>
+    <url-pattern>/form_6_3_Consume</url-pattern>
+  </servlet-mapping>
+
+
+  <!-- 后台  交易状态查询-->
+ <servlet>
+    <servlet-name>form_6_6_Query</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.Form_6_6_Query</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>form_6_6_Query</servlet-name>
+    <url-pattern>/form_6_6_Query</url-pattern>
+  </servlet-mapping>
+  
+  
+    <!-- 后台  消费撤销-->
+ <servlet>
+    <servlet-name>form_6_4_ConsumeUndo</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.Form_6_4_ConsumeUndo</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>form_6_4_ConsumeUndo</servlet-name>
+    <url-pattern>/form_6_4_ConsumeUndo</url-pattern>
+  </servlet-mapping>
+  
+      <!-- 后台  退货-->
+ <servlet>
+    <servlet-name>form_6_5_Refund</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.Form_6_5_Refund</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>form_6_5_Refund</servlet-name>
+    <url-pattern>/form_6_5_Refund</url-pattern>
+  </servlet-mapping>
+  
+   <!-- 后台  预授权-->
+ <servlet>
+    <servlet-name>form_6_7_1_AuthDeal</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.Form_6_7_1_AuthDeal</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>form_6_7_1_AuthDeal</servlet-name>
+    <url-pattern>/form_6_7_1_AuthDeal</url-pattern>
+  </servlet-mapping>
+  
+      <!-- 后台  预授权撤销-->
+ <servlet>
+    <servlet-name>form_6_7_2_AuthUndo</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.Form_6_7_2_AuthUndo</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>form_6_7_2_AuthUndo</servlet-name>
+    <url-pattern>/form_6_7_2_AuthUndo</url-pattern>
+  </servlet-mapping>
+  
+      <!-- 后台  预授权完成-->
+ <servlet>
+    <servlet-name>form_6_7_3_AuthFinish</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.Form_6_7_3_AuthFinish</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>form_6_7_3_AuthFinish</servlet-name>
+    <url-pattern>/form_6_7_3_AuthFinish</url-pattern>
+  </servlet-mapping>
+  
+      <!-- 后台  预授权完成撤销-->
+ <servlet>
+    <servlet-name>form_6_7_4_AuthFinishUndo</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.Form_6_7_4_AuthFinishUndo</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>form_6_7_4_AuthFinishUndo</servlet-name>
+    <url-pattern>/form_6_7_4_AuthFinishUndo</url-pattern>
+  </servlet-mapping>
+  
+        <!-- 后台  文件传输类（对账文件下载）-->
+ <servlet>
+    <servlet-name>form_7_2_FileTransfer</servlet-name>
+    <servlet-class>com.unionpay.acp.demo.Form_7_2_FileTransfer</servlet-class>
+  </servlet>
+   <servlet-mapping>
+    <servlet-name>form_7_2_FileTransfer</servlet-name>
+    <url-pattern>/form_7_2_FileTransfer</url-pattern>
+  </servlet-mapping>
+  
+  
+</web-app>

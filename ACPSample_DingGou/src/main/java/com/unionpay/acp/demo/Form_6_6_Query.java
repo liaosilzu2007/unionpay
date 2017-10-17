@@ -13,21 +13,26 @@ import javax.servlet.http.HttpServletResponse;
 import com.unionpay.acp.sdk.AcpService;
 import com.unionpay.acp.sdk.LogUtil;
 import com.unionpay.acp.sdk.SDKConfig;
-import com.unionpay.acp.sdk.SDKUtil;
 
 /**
- * 重要：联调测试时请仔细阅读注释！
- * 
- * 产品：手机控件产品<br>
- * 交易：交易状态查询交易：只有同步应答 <br>
- * 日期： 2015-09<br>
- * 版本： 1.0.0 
- * 版权： 中国银联<br>
- * 说明：以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己需要，按照技术文档编写。该代码仅供参考，不提供编码性能及规范性等方面的保障<br>
- * 交易说明：代付同步返回00，如果未收到后台通知建议3分钟后发起查询交易，可查询N次（不超过6次），每次时间间隔2N秒发起,即间隔1，2，4，8，16，32S查询（查询到03 04 05 01 12 34 60继续查询，否则终止查询）。【如果最终尚未确定交易是否成功请以对账文件为准】
- *        代付同步返03 04 05 01 12 34 60响应码及未得到银联响应（读超时）建议3分钟后发起查询交易，可查询N次（不超过6次），每次时间间隔2N秒发起,即间隔1，2，4，8，16，32S查询（查询到03 04 05 01 12 34 60继续查询，否则终止查询）。【如果最终尚未确定交易是否成功请以对账文件为准】
- */
-public class Form05_6_3_Query extends HttpServlet {
+* 重要：联调测试时请仔细阅读注释！
+* 
+* 产品：订购产品<br>
+* 交易：交易状态查询交易：只有同步应答 <br>
+* 日期： 2015-09<br>
+* 版本： 1.0.0 
+* 版权： 中国银联<br>
+* 声明：以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己需要，按照技术文档编写。该代码仅供参考，不提供编码，性能，规范性等方面的保障<br>
+* 该接口参考文档位置：open.unionpay.com帮助中心 下载  产品接口规范  《订购产品接口规范》，<br>
+*              《平台接入接口规范-第5部分-附录》（内包含应答码接口规范）<br>
+* 测试过程中的如果遇到疑问或问题您可以：1）优先在open平台中查找答案：
+* 							        调试过程中的问题或其他问题请在 https://open.unionpay.com/ajweb/help/faq/list 帮助中心 FAQ 搜索解决方案
+*                             测试过程中产生的7位应答码问题疑问请在https://open.unionpay.com/ajweb/help/respCode/respCodeList 输入应答码搜索解决方案
+*                           2） 咨询在线人工支持： open.unionpay.com注册一个用户并登陆在右上角点击“在线客服”，咨询人工QQ测试支持。
+* 交易说明：订购同步返回00，如果未收到后台通知建议发起查询交易，可查询N次（不超过6次），每次时间间隔2N秒发起,即间隔1，2，4，8，16，32S查询（查询到03 04 05继续查询，否则终止查询）。【如果最终尚未确定交易是否成功请以对账文件为准】
+*        订购同步返03 04 05响应码及未得到银联响应（读超时）建议发起查询交易，可查询N次（不超过6次），每次时间间隔2N秒发起,即间隔1，2，4，8，16，32S查询（查询到03 04 05继续查询，否则终止查询）。【如果最终尚未确定交易是否成功请以对账文件为准】
+*/ 
+public class Form_6_6_Query extends HttpServlet {
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -53,26 +58,26 @@ public class Form05_6_3_Query extends HttpServlet {
 		
 		/***银联全渠道系统，产品参数，除了encoding自行选择外其他不需修改***/
 		data.put("version", DemoBase.version);                 //版本号
-		data.put("encoding", DemoBase.encoding);          //字符集编码 可以使用UTF-8,GBK两种方式
+		data.put("encoding", DemoBase.encoding);          //字符集编码 
 		data.put("signMethod", SDKConfig.getConfig().getSignMethod()); //签名方法
-		data.put("txnType", "00");                             //交易类型 00-默认
-		data.put("txnSubType", "00");                          //交易子类型  默认00
-		data.put("bizType", "000201");                         //业务类型 
+		data.put("txnType", "00");                             //交易类型
+		data.put("txnSubType", "00");                          //交易子类型
+		data.put("bizType", "000000");                         //业务类型
 		
 		/***商户接入参数***/
 		data.put("merId", merId);                  			   //商户号码，请改成自己申请的商户号或者open上注册得来的777商户号测试
 		data.put("accessType", "0");                           //接入类型，商户接入固定填0，不需修改
 		
 		/***要调通交易以下字段必须修改***/
-		data.put("orderId", orderId);                 			//****商户订单号，每次发交易测试需修改为被查询的交易的订单号
-		data.put("txnTime", txnTime);                			//****订单发送时间，每次发交易测试需修改为被查询的交易的订单发送时间
+		data.put("orderId", orderId);                 //****商户订单号，每次发交易测试需修改为被查询的交易的订单号
+		data.put("txnTime", txnTime);                 //****订单发送时间，每次发交易测试需修改为被查询的交易的订单发送时间
 
 		/**请求参数设置完毕，以下对请求参数进行签名并发送http post请求，接收同步应答报文------------->**/
 		
 		Map<String, String> reqData = AcpService.sign(data,DemoBase.encoding);			//报文中certId,signature的值是在signData方法中获取并自动赋值的，只要证书配置正确即可。
 		String url = SDKConfig.getConfig().getSingleQueryUrl();								//交易请求url从配置文件读取对应属性文件acp_sdk.properties中的 acpsdk.singleQueryUrl
-		Map<String, String> rspData = AcpService.post(reqData, url,DemoBase.encoding); //发送请求报文并接受同步应答（默认连接超时时间30秒，读取返回结果超时时间30秒）;这里调用signData之后，调用submitUrl之前不能对submitFromData中的键值对做任何修改，如果修改会导致验签不通过
-
+		Map<String, String> rspData = AcpService.post(reqData,url,DemoBase.encoding);  //发送请求报文并接受同步应答（默认连接超时时间30秒，读取返回结果超时时间30秒）;这里调用signData之后，调用submitUrl之前不能对submitFromData中的键值对做任何修改，如果修改会导致验签不通过
+		
 		/**对应答码的处理，请根据您的业务逻辑来编写程序,以下应答码处理逻辑仅供参考------------->**/
 		//应答码规范参考open.unionpay.com帮助中心 下载  产品接口规范  《平台接入接口规范-第5部分-附录》
 		if(!rspData.isEmpty()){
@@ -110,6 +115,7 @@ public class Form05_6_3_Query extends HttpServlet {
 		String reqMessage = DemoBase.genHtmlResult(reqData);
 		String rspMessage = DemoBase.genHtmlResult(rspData);
 		resp.getWriter().write("交易状态查询交易</br>请求报文:<br/>"+reqMessage+"<br/>" + "应答报文:</br>"+rspMessage+"");
+				
 	}
 	
 	@Override

@@ -11,6 +11,7 @@
     <modules>
         <module>ACPSample_B2C</module>
         <module>ACPSample_AppServer</module>
+        <module>ACPSample_DingGou</module>
     </modules>
 
 
